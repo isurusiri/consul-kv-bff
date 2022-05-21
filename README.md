@@ -1,1 +1,1 @@
-# Consul KV Backend for Frontend (experimental)
+# Consul KV Backend for Frontend
