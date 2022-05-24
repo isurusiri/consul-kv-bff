@@ -1,9 +1,11 @@
+import { KVPair } from "./models"
+
 // KVPairsDTO is used for GET /kvpairs
-interface KVPairsDTO {
+export interface KVPairsDTO {
     data: KVPair[]
 }
 
 // KVPairDTO is used for POST /kvpairs
-interface KVPairDTO {
+export interface KVPairDTO {
     data: KVPair
 }

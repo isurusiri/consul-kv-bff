@@ -1,4 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
+import {KVPair} from "./models"
 
 let kvPairs: KVPair[] = [
     {
