@@ -1,7 +1,7 @@
 var consul = require('consul')();
 
-export const getKeyValuePairsFromConsul = () => {
-    consul.kv.get({key: 'isuru'}, (error: any, result: any) => {
+export const getKeyValuePairsFromConsulByKey = (key = 'isuru') => {
+    consul.kv.get({key: key}, (error: any, result: any) => {
         if (error) {
             console.log('Error while reading consul');
             console.log(error);
