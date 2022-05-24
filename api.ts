@@ -1,4 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
+import { getKeyValuePairsFromConsul } from './consul';
 import {KVPair} from "./models"
 
 let kvPairs: KVPair[] = [
@@ -13,6 +14,7 @@ let kvPairs: KVPair[] = [
 ]
 
 export const getKeyValuePairs = (request: Request, response: Response, next: NextFunction) => {
+    getKeyValuePairsFromConsul();
     response.status(200).json(kvPairs);
 }
 
