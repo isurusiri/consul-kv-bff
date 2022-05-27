@@ -1,6 +1,7 @@
 import {Request, Response, NextFunction} from 'express';
 import { getKeyValuePairsFromConsulByKey } from './consul';
 import {KVPair} from "./models"
+import { getKeyList } from './store';
 
 let kvPairs: KVPair[] = [
     {
@@ -14,7 +15,12 @@ let kvPairs: KVPair[] = [
 ]
 
 export const getKeyValuePairs = (request: Request, response: Response, next: NextFunction) => {
-    getKeyValuePairsFromConsulByKey();
+    let keys = getKeyList();
+    let kvPairs = []
+    keys.forEach((key, index) => {
+        kvPairs = getKeyValuePairsFromConsulByKey(key);
+    })
+    
     response.status(200).json(kvPairs);
 }
 

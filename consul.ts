@@ -1,6 +1,6 @@
 var consul = require('consul')();
 
-export const getKeyValuePairsFromConsulByKey = (key: string) => {
+export const getKeyValuePairsFromConsulByKey = (key: string): string[] => {
     if (!key) {
         consul.error('key is required to query.')
         return;
