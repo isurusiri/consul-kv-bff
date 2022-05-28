@@ -1,7 +1,7 @@
-import express, {Request, Response, NextFunction} from 'express';
+import express from 'express';
 import cors from "cors";
 import helmet from "helmet";
-import { getKeyValuePairs, updateKeyValuePairs } from './api';
+import { getKeyValuePairs, syncKeyList, updateKeyValuePairs } from './api';
 import { setKeyList } from './store';
 
 const app = express();
@@ -11,8 +11,9 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// mock
-setKeyList(['isuru-a', 'isuru-b'])
+let keys = process.env.KV_KEYS
+
+setKeyList(keys.split(","))
 
 app.listen(port, () => {
     console.log(`Cunsul KV BFF is running on port ${port}`)
@@ -20,3 +21,4 @@ app.listen(port, () => {
 
 app.get('/kvpairs', getKeyValuePairs);
 app.post('/kvpairs', updateKeyValuePairs);
+app.put('keylist', syncKeyList);

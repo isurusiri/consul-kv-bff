@@ -1,3 +1,5 @@
+import { setKeyList } from "./store";
+
 var consul = require('consul')();
 
 export const getKeyValuePairsFromConsulByKey = (key: string): string[] => {
@@ -19,4 +21,9 @@ export const getKeyValuePairsFromConsulByKey = (key: string): string[] => {
             console.log(result)
         }
     })
+}
+
+export const refreshKeyList = () => {
+    let keys = process.env.KV_KEYS
+    setKeyList(keys.split(","))
 }

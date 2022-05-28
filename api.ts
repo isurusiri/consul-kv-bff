@@ -1,5 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
-import { getKeyValuePairsFromConsulByKey } from './consul';
+import { getKeyValuePairsFromConsulByKey, refreshKeyList } from './consul';
 import {KVPair} from "./models"
 import { getKeyList } from './store';
 
@@ -29,4 +29,9 @@ export const updateKeyValuePairs = (request: Request, response: Response, next: 
     let kv: KVPair = {...request.body};
     kvPairs.push(kv);
     response.status(201).json(kvPairs);
+}
+
+export const syncKeyList =  (request: Request, response: Response, next: NextFunction) => {
+    refreshKeyList();
+    response.status(202);
 }
