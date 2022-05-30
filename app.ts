@@ -21,4 +21,4 @@ app.listen(port, () => {
 
 app.get('/kvpairs', getKeyValuePairs);
 app.post('/kvpairs', updateKeyValuePairs);
-app.put('keylist', syncKeyList);
+app.put('/keylist', syncKeyList);
