@@ -1,1 +1,1 @@
-# Consul Key Value Store Backend for Frontend
+# Consul Key Value Store Backend for Frontend.
