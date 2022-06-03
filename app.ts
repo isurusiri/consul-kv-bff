@@ -12,8 +12,9 @@ app.use(cors());
 app.use(express.json());
 
 let keys = process.env.KV_KEYS
+let keyList = keys.split(",")
 
-setKeyList(keys.split(","))
+setKeyList(keyList)
 
 app.listen(port, () => {
     console.log(`Cunsul KV BFF is running on port ${port}`)

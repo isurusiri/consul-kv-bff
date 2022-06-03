@@ -16,10 +16,13 @@ let kvPairs: KVPair[] = [
 
 export const getKeyValuePairs = (request: Request, response: Response, next: NextFunction) => {
     let keys = getKeyList();
+    console.log(keys)
     let kvPairs = []
     keys.forEach((key, index) => {
         kvPairs = getKeyValuePairsFromConsulByKey(key);
     })
+
+    console.log(kvPairs)
     
     response.status(200).json(kvPairs);
 }
