@@ -1,14 +1,18 @@
-import { setKeyList } from "./store";
+import { Store } from "./store";
 
 var consul = require('consul')();
+let store = Store.getInstance();
 
-export const getKeyValuePairsFromConsulByKey = (key: string): string[] => {
+export const getKeyValuePairsFromConsulByKey = async (
+    key: string, 
+    resolve: Function, 
+    reject: Function): Promise<string[]> => {
     if (!key) {
         consul.error('key is required to query.')
         return;
     }
-
-    consul.kv.get({key: key}, (error: any, result: any) => {
+    
+    await consul.kv.get({key: key, resolve}, (error: any, result: any) => {
         if (error) {
             console.log('Error while reading consul');
             console.log(error);
@@ -18,12 +22,12 @@ export const getKeyValuePairsFromConsulByKey = (key: string): string[] => {
         if (result == undefined) {
             console.log('Content not found');
         } else {
-            console.log(result)
+            resolve(result)
         }
-    })
+    });
 }
 
 export const refreshKeyList = () => {
     let keys = process.env.KV_KEYS
-    setKeyList(keys.split(","))
+    store.setKeyList(keys.split(","));
 }

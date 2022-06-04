@@ -1,7 +1,7 @@
-import {Request, Response, NextFunction} from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getKeyValuePairsFromConsulByKey, refreshKeyList } from './consul';
-import {KVPair} from "./models"
-import { getKeyList } from './store';
+import { KVPair } from "./models"
+import { Store } from './store';
 
 let kvPairs: KVPair[] = [
     {
@@ -14,16 +14,21 @@ let kvPairs: KVPair[] = [
     }
 ]
 
-export const getKeyValuePairs = (request: Request, response: Response, next: NextFunction) => {
-    let keys = getKeyList();
-    console.log(keys)
-    let kvPairs = []
-    keys.forEach((key, index) => {
-        kvPairs = getKeyValuePairsFromConsulByKey(key);
-    })
+let store = Store.getInstance();
 
-    console.log(kvPairs)
+export const getKeyValuePairs = async (request: Request, response: Response, next: NextFunction) => {
+    let keys = store.getKeyList();
     
+    let kvPairs = []
+    for (const key of keys) {
+        kvPairs.push(await getKeyValuePairsFromConsulByKey(key, (kvs: any) => {kvPairs.push(kvs)}, () => {}));
+        console.log(kvPairs);
+    }
+    // keys.forEach(async (key, index) => {
+    //     await kvPairs.push(getKeyValuePairsFromConsulByKey(key, (kvs: any) => {kvPairs.push(kvs)}, () => {}));
+    // })
+
+    console.log(`Resp: ${0}`, kvPairs)
     response.status(200).json(kvPairs);
 }
 

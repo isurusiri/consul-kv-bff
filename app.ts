@@ -2,7 +2,7 @@ import express from 'express';
 import cors from "cors";
 import helmet from "helmet";
 import { getKeyValuePairs, syncKeyList, updateKeyValuePairs } from './api';
-import { setKeyList } from './store';
+import { setKeyList, Store } from './store';
 
 const app = express();
 const port = 3000;
@@ -14,7 +14,8 @@ app.use(express.json());
 let keys = process.env.KV_KEYS
 let keyList = keys.split(",")
 
-setKeyList(keyList)
+let store = Store.getInstance();
+store.setKeyList(keyList);
 
 app.listen(port, () => {
     console.log(`Cunsul KV BFF is running on port ${port}`)
